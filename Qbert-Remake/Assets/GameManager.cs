@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // hold lives
-    // hold score
+    int lives;
+    int score;
 
     void Start()
     {
-        // Initialise lives
-        // Initialise score
+        lives = 3;
+        score = 0;
     }
 
     void Update()
@@ -22,14 +22,14 @@ public class GameManager : MonoBehaviour
             // Show game over screen
     }
 
-    void LoseLife()
+    public void LoseLife()
     {
-        // Lose 1 life
+        lives--;
         // Visual effect happens
     }
 
-    void IncreaseScore()
+    public void IncreaseScore()
     {
-        // Add 25 to score
+        score += 25;
     }
 }
