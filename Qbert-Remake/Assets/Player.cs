@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     float yPos;
 
     bool canMove;
+    bool onTile;
 
     void Start()
     {
@@ -53,30 +54,44 @@ public class Player : MonoBehaviour
             canMove = true;
         }
 
-        // If a tile exists and is empty + is hit
-            // Call TileHit() from GameManager
-            // Call IncreaseScore() from GameManager
-        // If there is not a tile
-            // Call LoseLife() from GameManager
+        if (!onTile)
+        {
+            GameManager.Instance.LoseLife();
+            xPos = 0f;
+            yPos = 0f;
+            onTile = true;
+        }
 
-        // If an enemy is hit
-        // Call LoseLife() from GameManager
+        if(xPos == 0f && yPos == 0f)
+        {
+            GameManager.Instance.spawning = false;
+        }
+        else
+        {
+            GameManager.Instance.spawning = true;
+        }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Tile")
+        if(collision.CompareTag("Tile"))
         {
-            // Call TileHit()
-            // Call IncreaseScore()
+            onTile = true;
+        }
+
+        if (collision.CompareTag("Enemy"))
+        {
+            GameManager.Instance.LoseLife();
+            xPos = 0f;
+            yPos = 0f;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Tile")
+        if (collision.CompareTag("Tile"))
         {
-            Debug.Log("Lose 1 life");
+            onTile = false;
         }
     }
 }

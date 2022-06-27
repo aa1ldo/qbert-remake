@@ -4,11 +4,31 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    int lives;
-    int score;
+    public int lives;
+    public int score;
+    public Color targetColour;
+    public bool spawning;
+
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+                Debug.LogError("No game manager!");
+
+            return _instance;
+        }
+    }
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     void Start()
     {
+        spawning = false;
         lives = 3;
         score = 0;
     }
@@ -16,10 +36,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // If all tiles match the specified colour
-            // Add 1000 to score
-            // Visual effect happens
+        // Add 1000 to score
+        // Visual effect happens
         // If lives is 0
-            // Show game over screen
+        // Show game over screen
     }
 
     public void LoseLife()
