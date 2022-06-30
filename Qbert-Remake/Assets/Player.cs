@@ -63,21 +63,11 @@ public class Player : MonoBehaviour
         }
         */
 
-        if (!onTile)
+        if (!onTile && canMove)
         {
+            transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
-            xPos = 0f;
-            yPos = 0f;
             onTile = true;
-        }
-
-        if(xPos == 0f && yPos == 0f)
-        {
-            GameManager.Instance.invincible = true;
-        }
-        else
-        {
-            GameManager.Instance.invincible = false;
         }
     }
 
@@ -97,7 +87,7 @@ public class Player : MonoBehaviour
         canMove = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.CompareTag("Tile"))
         {
@@ -106,12 +96,11 @@ public class Player : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
-            if (!GameManager.Instance.invincible)
-            {
-                GameManager.Instance.LoseLife();
-                xPos = 0f;
-                yPos = 0f;
-            }
+            canMove = false;
+            StopAllCoroutines();
+            transform.position = new Vector2(0f, 0f);
+            GameManager.Instance.LoseLife();
+            canMove = true;
         }
     }
 

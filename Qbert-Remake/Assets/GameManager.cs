@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     public int lives;
     public int score;
     public Color targetColour;
-    public bool invincible;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -28,7 +27,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        invincible = true;
         lives = 3;
         score = 0;
     }
