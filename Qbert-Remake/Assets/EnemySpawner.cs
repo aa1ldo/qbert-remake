@@ -5,23 +5,20 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     int[] directions = { -1, 1 };
+    float[] spawnPositions = { -1f, 1f };
 
     public GameObject enemy;
 
     bool keepSpawning = true;
 
-    private void Update()
+    private void Start()
     {
-        if (GameManager.Instance.spawning && keepSpawning)
-        {
-            StartCoroutine(CreateEnemies());
-            keepSpawning = false;
-        }
+        StartCoroutine(CreateEnemies());
     }
 
     private IEnumerator CreateEnemies()
     {
-        while (GameManager.Instance.spawning)
+        while (keepSpawning)
         {
             yield return new WaitForSeconds(2f);
             Debug.Log("Spawning...");
@@ -29,17 +26,28 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+
+    // IEnumerator SpawnEnemy()
+        // Choose a random spawn position
+        // Instantiate the enemy at spawn position
+        // Play spawn animation
+        // yield return new WaitForSeconds(length of spawn animation);
+
     private IEnumerator SpawnEnemy()
     {
         Debug.Log("Spawned an enemy!");
-        GameObject newEnemy = Instantiate(enemy, new Vector2(0f, 0f), Quaternion.identity);
+        int rSpawn = Random.Range(0, 2);
+        GameObject newEnemy = Instantiate(enemy, new Vector2(0f, -1.5f), Quaternion.identity);
         Enemy enemyScript = newEnemy.GetComponent<Enemy>();
+
+        enemyScript.xPos = spawnPositions[rSpawn];
+        enemyScript.yPos = -1.5f;
 
         for (int i = 0; i < 7; i++)
         {
             yield return new WaitForSeconds(0.5f);
-            int rIndex = Random.Range(0, 2);
-            enemyScript.xPos -= directions[rIndex];
+            int rDirection = Random.Range(0, 2);
+            enemyScript.xPos -= directions[rDirection];
             enemyScript.yPos -= 1.5f;
         }
         Destroy(newEnemy);
