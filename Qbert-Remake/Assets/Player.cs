@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     bool canMove;
     bool onTile;
+    public float movementDuration;
 
     void Start()
     {
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
         {
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos + 1f, yPos + 1.5f), 0.5f));
+            StartCoroutine(Move(new Vector2(xPos + 1f, yPos + 1.5f)));
             //xPos += 1f;
             //yPos += 1.5f;
         }
@@ -35,7 +36,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
         {
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos - 1f, yPos + 1.5f), 0.5f));
+            StartCoroutine(Move(new Vector2(xPos - 1f, yPos + 1.5f)));
             //xPos -= 1f;
             //yPos += 1.5f;
         }
@@ -43,7 +44,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
         {
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos + 1f, yPos - 1.5f), 0.5f));
+            StartCoroutine(Move(new Vector2(xPos + 1f, yPos - 1.5f)));
             //xPos += 1f;
             //yPos -= 1.5f;
         }
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
         {
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos - 1f, yPos - 1.5f), 0.5f));
+            StartCoroutine(Move(new Vector2(xPos - 1f, yPos - 1.5f)));
             //xPos -= 1f;
             //yPos -= 1.5f;
         }
@@ -65,21 +66,22 @@ public class Player : MonoBehaviour
 
         if (!onTile && canMove)
         {
+            Debug.Log("Fell off grid...");
             transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
             onTile = true;
         }
     }
 
-    IEnumerator Move(Vector2 targetPosition, float duration)
+    IEnumerator Move(Vector2 targetPosition)
     {
         //anim.SetTrigger("Jump");
         canMove = false;
         float time = 0f;
 
-        while (time < duration)
+        while (time < movementDuration)
         {
-            transform.position = Vector2.Lerp(transform.position, targetPosition, time / duration);
+            transform.position = Vector2.Lerp(transform.position, targetPosition, time / movementDuration);
             time += Time.deltaTime;
             yield return null;
         }

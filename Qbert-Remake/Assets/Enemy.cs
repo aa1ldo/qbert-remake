@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector2(xPos, yPos);
+        // transform.position = new Vector2(xPos, yPos);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

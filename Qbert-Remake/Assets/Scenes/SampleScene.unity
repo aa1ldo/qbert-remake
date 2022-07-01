@@ -217,7 +217,6 @@ MonoBehaviour:
   lives: 3
   score: 0
   targetColour: {r: 0.75020695, g: 0, b: 1, a: 1}
-  invincible: 0
 --- !u!4 &110046732
 Transform:
   m_ObjectHideFlags: 0
@@ -387,6 +386,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 7887196065566856091, guid: 91054ea6e86ee4b4e921ddb99301b2f8, type: 3}
+  animLength: 0.5
+  waitLength: 1
+  moveDuration: 0.3
 --- !u!4 &150391976
 Transform:
   m_ObjectHideFlags: 0
@@ -1435,7 +1437,7 @@ Animator:
   m_GameObject: {fileID: 972177507}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: eeff51fcdc3d6f440817b06deb4de8a3, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2200,7 +2202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1ca41deae35cc44e9b89d3e4d777619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 972177510}
+  movementDuration: 0.2
 --- !u!50 &1738246194
 Rigidbody2D:
   serializedVersion: 4

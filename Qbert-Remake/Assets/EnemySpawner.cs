@@ -9,6 +9,11 @@ public class EnemySpawner : MonoBehaviour
 
     public GameObject enemy;
 
+    Animator anim;
+    public float animLength;
+    public float waitLength;
+    public float moveDuration;
+
     bool keepSpawning = true;
 
     private void Start()
@@ -26,13 +31,48 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private IEnumerator SpawnEnemy()
+    {
+        int rSpawn = Random.Range(0, 2);
+        GameObject newEnemy = Instantiate(enemy, new Vector2(spawnPositions[rSpawn], -1.5f), Quaternion.identity);
+        anim = newEnemy.GetComponentInChildren<Animator>();
+        anim.SetTrigger("Spawn");
+        yield return new WaitForSeconds(animLength);
+
+        for (int i = 0; i < 6; i++)
+        {
+            int rDirection = Random.Range(0, 2);
+            StartCoroutine(MoveEnemy(newEnemy, new Vector2(newEnemy.transform.position.x - directions[rDirection], newEnemy.transform.position.y - 1.5f)));
+            yield return new WaitForSeconds(waitLength);
+        }
+        Destroy(newEnemy);
+    }
+
+    private IEnumerator MoveEnemy(GameObject enemy, Vector2 targetPosition)
+    {
+        float time = 0f;
+
+        while (time < moveDuration)
+        {
+            enemy.transform.position = Vector2.Lerp(enemy.transform.position, targetPosition, time / moveDuration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        enemy.transform.position = targetPosition;
+    }
 
     // IEnumerator SpawnEnemy()
         // Choose a random spawn position
         // Instantiate the enemy at spawn position
         // Play spawn animation
         // yield return new WaitForSeconds(length of spawn animation);
+        // Loop 6 times:
+            // yield return new WaitForSeconds(length of movement);
+            // Call the Movement coroutine
+        // Destroy Enemy
 
+
+    /*
     private IEnumerator SpawnEnemy()
     {
         Debug.Log("Spawned an enemy!");
@@ -52,4 +92,5 @@ public class EnemySpawner : MonoBehaviour
         }
         Destroy(newEnemy);
     }
+    */
 }
