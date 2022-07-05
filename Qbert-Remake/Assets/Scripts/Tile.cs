@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
 
     private void Start()
     {
-        tile = GetComponent<SpriteRenderer>();
+        tile = GetComponentInChildren<SpriteRenderer>();
     }
     public void TileHit()
     {

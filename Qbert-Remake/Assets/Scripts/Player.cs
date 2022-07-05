@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     bool canMove;
     bool onTile;
+    bool outOfBounds;
     public float movementDuration;
 
     void Start()
@@ -64,12 +65,23 @@ public class Player : MonoBehaviour
         }
         */
 
+        /*
         if (!onTile && canMove)
         {
             Debug.Log("Fell off grid...");
             transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
             onTile = true;
+        }
+        */
+
+        if (outOfBounds)
+        {
+            StopAllCoroutines();
+            transform.position = new Vector2(0f, 0f);
+            GameManager.Instance.LoseLife();
+            canMove = true;
+            outOfBounds = false;
         }
     }
 
@@ -96,6 +108,15 @@ public class Player : MonoBehaviour
             onTile = true;
         }
 
+        if (collision.CompareTag("Occupied") && canMove)
+        {
+            StopAllCoroutines();
+            transform.position = new Vector2(0f, 0f);
+            GameManager.Instance.LoseLife();
+            canMove = true;
+        }
+
+        
         if (collision.CompareTag("Enemy"))
         {
             canMove = false;
@@ -103,6 +124,11 @@ public class Player : MonoBehaviour
             transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
             canMove = true;
+        }
+        
+        if (collision.CompareTag("Border"))
+        {
+            outOfBounds = true;
         }
     }
 

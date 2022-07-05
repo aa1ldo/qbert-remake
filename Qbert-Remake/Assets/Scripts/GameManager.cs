@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        lives = 3;
+        lives = 4;
         score = 0;
     }
 

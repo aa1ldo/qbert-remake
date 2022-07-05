@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Tile
   - Enemy
+  - Occupied
+  - Border
   layers:
   - Default
   - TransparentFX

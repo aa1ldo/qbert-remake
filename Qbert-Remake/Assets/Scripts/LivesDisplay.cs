@@ -12,6 +12,6 @@ public class LivesDisplay : MonoBehaviour
     }
     void Update()
     {
-        text.text = GameManager.Instance.lives.ToString();
+        text.text = "=" + GameManager.Instance.lives;
     }
 }

@@ -16,15 +16,21 @@ public class Enemy : MonoBehaviour
     {
         if (collision.CompareTag("Tile"))
         {
+            collision.tag = "Occupied";
+        }
+
+        if (collision.CompareTag("Occupied"))
+        {
             onTile = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Tile"))
+        if (collision.CompareTag("Occupied"))
         {
             onTile = false;
+            collision.tag = "Tile";
         }
     }
 }
