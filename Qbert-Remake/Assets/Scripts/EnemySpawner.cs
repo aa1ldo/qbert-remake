@@ -10,6 +10,11 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy;
 
     Animator anim;
+
+    public float minSpawnTime;
+    public float maxSpawnTime;
+    float spawnTime;
+
     public float animLength;
     public float waitLength;
     public float moveDuration;
@@ -25,7 +30,8 @@ public class EnemySpawner : MonoBehaviour
     {
         while (keepSpawning)
         {
-            yield return new WaitForSeconds(2f);
+            spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+            yield return new WaitForSeconds(spawnTime);
             Debug.Log("Spawning...");
             StartCoroutine(SpawnEnemy());
         }

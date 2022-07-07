@@ -6,7 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public int lives;
     public int score;
+    public int tilesChanged; // used to calculate when the game should end
+
+    public Color startingColour;
     public Color targetColour;
+
+    bool completedLevel;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -27,17 +32,24 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        lives = 4;
+        lives = 3;
         score = 0;
     }
 
     void Update()
     {
-        // If all tiles match the specified colour
-        // Add 1000 to score
-        // Visual effect happens
-        // If lives is 0
-        // Show game over screen
+        if(lives < 0)
+        {
+            lives = 0;
+            // Show game over screen
+        }
+
+        if(tilesChanged == 28 && !completedLevel)
+        {
+            score += 1000;
+            // Show win screen
+            completedLevel = true;
+        }
     }
 
     public void LoseLife()

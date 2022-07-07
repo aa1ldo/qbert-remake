@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Occupied
   - Border
+  - FirstTile
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2967303451
+    locked: 0
+  - name: UI
+    uniqueID: 411673153
     locked: 0

@@ -11,6 +11,12 @@ public class Player : MonoBehaviour
     bool canMove;
     bool onTile;
     bool outOfBounds;
+    bool keepMoving = true;
+
+    bool invincible = false;
+
+    float time = 0f;
+    Vector2 targetPosition;
     public float movementDuration;
 
     void Start()
@@ -28,42 +34,49 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
         {
+            //StartCoroutine(Move(new Vector2(xPos + 1f, yPos + 1.5f)));
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos + 1f, yPos + 1.5f)));
+            targetPosition = new Vector2(xPos + 1f, yPos + 1.5f);
             //xPos += 1f;
             //yPos += 1.5f;
         }
 
         if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
         {
+            //StartCoroutine(Move(new Vector2(xPos - 1f, yPos + 1.5f)));
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos - 1f, yPos + 1.5f)));
+            targetPosition = new Vector2(xPos - 1f, yPos + 1.5f);
             //xPos -= 1f;
             //yPos += 1.5f;
         }
 
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
         {
+            //StartCoroutine(Move(new Vector2(xPos + 1f, yPos - 1.5f)));
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos + 1f, yPos - 1.5f)));
+            targetPosition = new Vector2(xPos + 1f, yPos - 1.5f);
             //xPos += 1f;
             //yPos -= 1.5f;
         }
 
         if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
         {
+            //StartCoroutine(Move(new Vector2(xPos - 1f, yPos - 1.5f)));
             canMove = false;
-            StartCoroutine(Move(new Vector2(xPos - 1f, yPos - 1.5f)));
+            targetPosition = new Vector2(xPos - 1f, yPos - 1.5f);
             //xPos -= 1f;
             //yPos -= 1.5f;
         }
 
-        /*
         if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
             canMove = true;
         }
-        */
+
+        if (!invincible)
+        {
+            transform.position = Vector2.Lerp(transform.position, targetPosition, movementDuration);
+        }
 
         /*
         if (!onTile && canMove)
@@ -75,31 +88,32 @@ public class Player : MonoBehaviour
         }
         */
 
+        /*
         if (outOfBounds)
         {
-            StopAllCoroutines();
             transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
-            canMove = true;
             outOfBounds = false;
         }
+        */
     }
 
+    /*
     IEnumerator Move(Vector2 targetPosition)
     {
         //anim.SetTrigger("Jump");
-        canMove = false;
         float time = 0f;
 
-        while (time < movementDuration)
+        while (time < movementDuration && keepMoving)
         {
             transform.position = Vector2.Lerp(transform.position, targetPosition, time / movementDuration);
             time += Time.deltaTime;
             yield return null;
         }
+
         transform.position = targetPosition;
-        canMove = true;
     }
+    */
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -108,27 +122,29 @@ public class Player : MonoBehaviour
             onTile = true;
         }
 
-        if (collision.CompareTag("Occupied") && canMove)
+        /*
+        if (collision.CompareTag("Occupied"))
         {
             StopAllCoroutines();
             transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
             canMove = true;
         }
+        */
 
         
         if (collision.CompareTag("Enemy"))
         {
-            canMove = false;
-            StopAllCoroutines();
+            invincible = true;
             transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
-            canMove = true;
         }
         
         if (collision.CompareTag("Border"))
         {
-            outOfBounds = true;
+            invincible = true;
+            transform.position = new Vector2(0f, 0f);
+            GameManager.Instance.LoseLife();
         }
     }
 
