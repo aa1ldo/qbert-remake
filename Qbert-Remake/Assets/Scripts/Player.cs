@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
         {
             //StartCoroutine(Move(new Vector2(xPos + 1f, yPos + 1.5f)));
             canMove = false;
+            invincible = false;
             targetPosition = new Vector2(xPos + 1f, yPos + 1.5f);
             //xPos += 1f;
             //yPos += 1.5f;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         {
             //StartCoroutine(Move(new Vector2(xPos - 1f, yPos + 1.5f)));
             canMove = false;
+            invincible = false;
             targetPosition = new Vector2(xPos - 1f, yPos + 1.5f);
             //xPos -= 1f;
             //yPos += 1.5f;
@@ -54,6 +56,7 @@ public class Player : MonoBehaviour
         {
             //StartCoroutine(Move(new Vector2(xPos + 1f, yPos - 1.5f)));
             canMove = false;
+            invincible = false;
             targetPosition = new Vector2(xPos + 1f, yPos - 1.5f);
             //xPos += 1f;
             //yPos -= 1.5f;
@@ -63,6 +66,7 @@ public class Player : MonoBehaviour
         {
             //StartCoroutine(Move(new Vector2(xPos - 1f, yPos - 1.5f)));
             canMove = false;
+            invincible = false;
             targetPosition = new Vector2(xPos - 1f, yPos - 1.5f);
             //xPos -= 1f;
             //yPos -= 1.5f;
@@ -76,6 +80,10 @@ public class Player : MonoBehaviour
         if (!invincible)
         {
             transform.position = Vector2.Lerp(transform.position, targetPosition, movementDuration);
+        }
+        else
+        {
+            transform.position = new Vector2(0f, 0f);
         }
 
         /*
@@ -145,6 +153,12 @@ public class Player : MonoBehaviour
             invincible = true;
             transform.position = new Vector2(0f, 0f);
             GameManager.Instance.LoseLife();
+        }
+
+        if (collision.CompareTag("Teleporter"))
+        {
+            invincible = true;
+            //targetPosition = collision.transform.position;
         }
     }
 

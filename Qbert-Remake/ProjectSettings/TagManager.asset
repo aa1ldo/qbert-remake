@@ -9,6 +9,7 @@ TagManager:
   - Occupied
   - Border
   - FirstTile
+  - Teleporter
   layers:
   - Default
   - TransparentFX

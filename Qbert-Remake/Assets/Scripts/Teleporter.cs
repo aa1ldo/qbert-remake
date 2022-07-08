@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    bool lerpToPoint;
+    public Vector2 point = new Vector2(0f,0f);
+    public float speed;
+
+    private void Update()
     {
-        
+        /*
+        if (lerpToPoint)
+        {
+            transform.position = Vector2.LerpUnclamped(transform.position, point, speed);
+        }
+        */
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.CompareTag("Player"))
+        {
+            //lerpToPoint = true;
+        }
     }
 }

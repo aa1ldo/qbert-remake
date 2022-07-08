@@ -405,7 +405,13 @@ EdgeCollider2D:
   m_EdgeRadius: 0
   m_Points:
   - {x: -8.808226, y: -10.4596}
-  - {x: 0.07112324, y: 2.1835685}
+  - {x: -5.615094, y: -5.689162}
+  - {x: -5.951953, y: -3.641291}
+  - {x: -3.7431107, y: -3.6330464}
+  - {x: 0.07112324, y: 1.8416705}
+  - {x: 3.9877462, y: -3.6937158}
+  - {x: 5.7534924, y: -3.9133236}
+  - {x: 5.59111, y: -5.779786}
   - {x: 8.499336, y: -10.666001}
   - {x: -8.77307, y: -10.503402}
   m_AdjacentStartPoint: {x: 0, y: 0}
@@ -2575,6 +2581,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 983958178}
     m_Modifications:
+    - target: {fileID: 8540479355711499939, guid: a9dd9cb915d035340aa3a81930b30708, type: 3}
+      propertyPath: point.x
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8540479355711499940, guid: a9dd9cb915d035340aa3a81930b30708, type: 3}
       propertyPath: m_RootOrder
       value: 11
