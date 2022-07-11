@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    private void Update()
+    public GameObject rules;
+    public void PlayGame()
     {
-        if (Input.anyKeyDown)
-        {
-            gameObject.SetActive(false);
-            GameManager.Instance.gameStart = true;
-        }
+        gameObject.SetActive(false);
+        GameManager.Instance.gameStart = true;
+    }
+
+    public void ShowRules()
+    {
+        rules.SetActive(true);
     }
 }
