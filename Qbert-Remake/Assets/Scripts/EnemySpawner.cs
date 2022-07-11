@@ -20,10 +20,22 @@ public class EnemySpawner : MonoBehaviour
     public float moveDuration;
 
     bool keepSpawning = true;
+    bool startSpawning = true;
 
+    /*
     private void Start()
     {
         StartCoroutine(CreateEnemies());
+    }
+    */
+
+    private void Update()
+    {
+        if (GameManager.Instance.gameStart && startSpawning)
+        {
+            StartCoroutine(CreateEnemies());
+            startSpawning = false;
+        }
     }
 
     private IEnumerator CreateEnemies()

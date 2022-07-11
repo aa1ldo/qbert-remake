@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     public Color startingColour;
     public Color targetColour;
 
-    bool completedLevel;
+    public bool gameStart;
+    public bool completedLevel;
+    public int currentLevel = 1;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -34,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         lives = 3;
         score = 0;
+        gameStart = false;
     }
 
     void Update()
@@ -46,9 +49,14 @@ public class GameManager : MonoBehaviour
 
         if(tilesChanged == 28 && !completedLevel)
         {
-            score += 1000;
-            // Show win screen
+            score += currentLevel * 1000;
+            currentLevel++;
+            tilesChanged = 0;
             completedLevel = true;
+        }
+        else
+        {
+            completedLevel = false;
         }
     }
 

@@ -32,58 +32,66 @@ public class Player : MonoBehaviour
         yPos = transform.position.y;
         //transform.position = new Vector2(xPos, yPos);
 
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
+        if (GameManager.Instance.gameStart)
         {
-            //StartCoroutine(Move(new Vector2(xPos + 1f, yPos + 1.5f)));
-            canMove = false;
-            invincible = false;
-            targetPosition = new Vector2(xPos + 1f, yPos + 1.5f);
-            //xPos += 1f;
-            //yPos += 1.5f;
+            if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
+            {
+                //StartCoroutine(Move(new Vector2(xPos + 1f, yPos + 1.5f)));
+                canMove = false;
+                invincible = false;
+                targetPosition = new Vector2(xPos + 1f, yPos + 1.5f);
+                //xPos += 1f;
+                //yPos += 1.5f;
+            }
+
+            if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
+            {
+                //StartCoroutine(Move(new Vector2(xPos - 1f, yPos + 1.5f)));
+                canMove = false;
+                invincible = false;
+                targetPosition = new Vector2(xPos - 1f, yPos + 1.5f);
+                //xPos -= 1f;
+                //yPos += 1.5f;
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
+            {
+                //StartCoroutine(Move(new Vector2(xPos + 1f, yPos - 1.5f)));
+                canMove = false;
+                invincible = false;
+                targetPosition = new Vector2(xPos + 1f, yPos - 1.5f);
+                //xPos += 1f;
+                //yPos -= 1.5f;
+            }
+
+            if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
+            {
+                //StartCoroutine(Move(new Vector2(xPos - 1f, yPos - 1.5f)));
+                canMove = false;
+                invincible = false;
+                targetPosition = new Vector2(xPos - 1f, yPos - 1.5f);
+                //xPos -= 1f;
+                //yPos -= 1.5f;
+            }
+
+            if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
+            {
+                canMove = true;
+            }
+
+            if (!invincible)
+            {
+                transform.position = Vector2.Lerp(transform.position, targetPosition, movementDuration);
+            }
+            else
+            {
+                transform.position = new Vector2(0f, 0f);
+            }
         }
 
-        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
+        if (GameManager.Instance.completedLevel)
         {
-            //StartCoroutine(Move(new Vector2(xPos - 1f, yPos + 1.5f)));
-            canMove = false;
-            invincible = false;
-            targetPosition = new Vector2(xPos - 1f, yPos + 1.5f);
-            //xPos -= 1f;
-            //yPos += 1.5f;
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow) && canMove)
-        {
-            //StartCoroutine(Move(new Vector2(xPos + 1f, yPos - 1.5f)));
-            canMove = false;
-            invincible = false;
-            targetPosition = new Vector2(xPos + 1f, yPos - 1.5f);
-            //xPos += 1f;
-            //yPos -= 1.5f;
-        }
-
-        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.LeftArrow) && canMove)
-        {
-            //StartCoroutine(Move(new Vector2(xPos - 1f, yPos - 1.5f)));
-            canMove = false;
-            invincible = false;
-            targetPosition = new Vector2(xPos - 1f, yPos - 1.5f);
-            //xPos -= 1f;
-            //yPos -= 1.5f;
-        }
-
-        if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            canMove = true;
-        }
-
-        if (!invincible)
-        {
-            transform.position = Vector2.Lerp(transform.position, targetPosition, movementDuration);
-        }
-        else
-        {
-            transform.position = new Vector2(0f, 0f);
+            invincible = true;
         }
 
         /*
