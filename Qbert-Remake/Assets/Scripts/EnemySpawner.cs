@@ -11,8 +11,11 @@ public class EnemySpawner : MonoBehaviour
 
     Animator anim;
 
-    public float minSpawnTime;
-    public float maxSpawnTime;
+    public float minThreshold;
+    public float maxThreshold;
+    float minSpawnTime;
+    float maxSpawnTime;
+    public float maxMultiplier = 0.2f;
     float spawnTime;
 
     public float animLength;
@@ -31,11 +34,17 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.gameStart && startSpawning)
+        if (GameManager.Instance.gameStart && GameManager.Instance.continuedToLevel && startSpawning)
         {
+            Debug.Log("spawning enemies.....");
             StartCoroutine(CreateEnemies());
             startSpawning = false;
         }
+
+        minSpawnTime = minThreshold;
+        maxSpawnTime = maxThreshold - GameManager.Instance.currentLevel * maxMultiplier;
+
+        Debug.Log(maxSpawnTime);
     }
 
     private IEnumerator CreateEnemies()
@@ -44,7 +53,6 @@ public class EnemySpawner : MonoBehaviour
         {
             spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
             yield return new WaitForSeconds(spawnTime);
-            Debug.Log("Spawning...");
             StartCoroutine(SpawnEnemy());
         }
     }

@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour
 
     public bool gameStart;
     public bool completedLevel;
+    public bool continuedToLevel;
     public int currentLevel = 1;
+
+    public GameObject levelSelect;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -53,10 +56,20 @@ public class GameManager : MonoBehaviour
             currentLevel++;
             tilesChanged = 0;
             completedLevel = true;
+            levelSelect.SetActive(true);
         }
         else
         {
             completedLevel = false;
+        }
+
+        if (levelSelect.activeSelf)
+        {
+            continuedToLevel = false;
+        }
+        else
+        {
+            continuedToLevel = true;
         }
     }
 
